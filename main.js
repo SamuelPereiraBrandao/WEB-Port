@@ -1,15 +1,20 @@
+document.querySelector("#open-nav-menu").addEventListener("click", function() {
+    document.querySelector("header nav .wrapper").classList.add("nav-open");
+  });
 
-function testando (mensagem){
-    alert(mensagem);   
-}
 
+document.querySelector("#close-nav-menu").addEventListener("click", function() {
+    document.querySelector("header nav .wrapper").classList.remove("nav-open");
+  });
 
-setTimeout(function(){
-    document.getElementById("weather").innerHTML = "passou 2 segundos";
-    document.querySelector("#greeting").classList.add("redbg");
-},2000);
+  let linksA = document.querySelectorAll("a");
+  console.log(linksA[4].hash);
 
-setTimeout(function(){
-    document.getElementById("weather").innerHTML = "passou 4 segundos";
-    document.querySelector("#greeting").classList.remove("redbg");
-},4000);
+  linksA.forEach(function(linksfunc) {
+    linksfunc.addEventListener("click", function() {
+   /*    alert(wrapper.hash); */
+      document.querySelector("header nav .wrapper").classList.remove("nav-open");
+    });
+  });
+
+  

@@ -274,7 +274,7 @@ main .gallery-section .thumbnails img[data-selected="true"] {
   border: 2px solid #ffffff;
 }
 main .gallery-section .thumbnails img + img {
-  margin-left: 20px;
+  margin-left: 10%;
 }
 main .products-section {
   margin-bottom: 80px;
