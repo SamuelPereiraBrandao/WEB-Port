@@ -160,9 +160,11 @@ function thumbnailDisplay() {
 }
 
 
-function productsHandler() {
+function populateProducts(productList){
+  
   let productsSection = document.querySelector(".products-area");
-  products.forEach(function (product, index) {
+  productsSection.textContent = "";
+  productList.forEach(function (product, index) {
     let productElm = document.createElement("div");
     productElm.classList.add("product-item");
     let productImage = document.createElement("img");
@@ -200,8 +202,12 @@ function productsHandler() {
     
     productsSection.append(productElm);
   });
+}
 
 
+
+
+function productsHandler() {
 let freeProducts = products.filter(function(item){
   return !item.price || item.price <= 0;
 });
@@ -212,26 +218,35 @@ let paidProducts = products.filter(function(item){
 console.log("free", freeProducts)
 console.log("paid", paidProducts)
 
-products.forEach(function(product, index){
-products
+populateProducts(products);
+
+let productsFilter = document.querySelector('.products-filter');
+productsFilter.addEventListener("click", function(e){
+if (e.target.id == 'all'){
+  populateProducts(products);
+}else if(e.target.id == 'paid'){
+  populateProducts(paidProducts);
+}else if (e.target.id == 'free'){
+  populateProducts(freeProducts);
+
+}
 });
 document.querySelector(".products-filter label[for=all] span.product-amount").textContent = products.length;
 document.querySelector(".products-filter label[for=paid] span.product-amount").textContent = paidProducts.length;
 document.querySelector(".products-filter label[for=free] span.product-amount").textContent = freeProducts.length;
-
-
-
 };
 
-
-
-
+function footerHandler(){
+  let ano = new Date().getFullYear();
+document.querySelector("footer").textContent = `® ${ano}- Todos diretiso reservados`;
+}
 //page load
 menuHandler();
 dateAtt();
 productsHandler();
 temperatureDisplay();
 thumbnailDisplay();
+footerHandler();
 //products section
 /* <div class="product-item">
 <img src="./assets/products/img6.png" alt="AstroFiction" />
