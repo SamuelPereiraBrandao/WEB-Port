@@ -1,3 +1,5 @@
+const weatherAPIKey = "85b7ef29d148e1476908bbfc72783c43";
+
 function menuHandler() {
   document.querySelector("#open-nav-menu").addEventListener("click", function () {
     document.querySelector("header nav .wrapper").classList.add("nav-open");
@@ -208,15 +210,12 @@ function populateProducts(productList){
 
 
 function productsHandler() {
-let freeProducts = products.filter(function(item){
-  return !item.price || item.price <= 0;
-});
+let freeProducts = products.filter( item => !item.price || item.price <= 0 );
 
-let paidProducts = products.filter(function(item){
-  return item.price > 0;
-});
-console.log("free", freeProducts)
-console.log("paid", paidProducts)
+
+let paidProducts = products.filter( item => item.price > 0);
+
+
 
 populateProducts(products);
 
@@ -238,8 +237,29 @@ document.querySelector(".products-filter label[for=free] span.product-amount").t
 
 function footerHandler(){
   let ano = new Date().getFullYear();
-document.querySelector("footer").textContent = `® ${ano}- Todos diretiso reservados`;
+document.querySelector("footer").textContent = `® ${ano}- Todos direitos reservados`;
 }
+
+
+
+
+
+navigator.geolocation.getCurrentPosition(position => {
+  let latitude = position.coords.latitude;
+  let longitude = position.coords.longitude;
+
+  let weatherAPIUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${weatherAPIKey}`;
+
+  fetch (weatherAPIUrl)
+  .then(response => response.json())
+  .then (data =>{
+    const watherCondition = 'sunny';
+    const userLocation = "São Paulo";
+    let temperature = 30;
+  });
+});
+
+
 //page load
 menuHandler();
 dateAtt();
