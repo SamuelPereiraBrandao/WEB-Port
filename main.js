@@ -51,33 +51,7 @@ function dateAtt() {
   }, 1000);
 
 }
-function temperatureDisplay() {
-  const weatherCondition = "chuvoso";
-  const userLocation = "São Paulo";
-  let temperature = 27.6;
-  let celsiusText = `O dia está ${weatherCondition} em ${userLocation} e com temperatura de ${temperature.toFixed(
-    1
-  )} °C.`;
-  let fahr = (temperature * 9) / 5 + 32;
 
-  let fahrText = `O dia está ${weatherCondition} em ${userLocation} e com temperatura de ${fahr.toFixed(
-    1
-  )} Fahr.`;
-
-  document.querySelector("#greeting").innerHTML = greetingText;
-
-  document.querySelector("#weather").innerHTML = celsiusText;
-
-  document
-    .querySelector(".weather-group")
-    .addEventListener("click", function (e) {
-      if (e.target.id === "celsius") {
-        document.querySelector("#weather").innerHTML = celsiusText;
-      } else if (e.target.id === "fahr") {
-        document.querySelector("#weather").innerHTML = fahrText;
-      }
-    });
-}
 //gallery
 const galleryImages = [
   {
@@ -248,23 +222,53 @@ navigator.geolocation.getCurrentPosition(position => {
   let latitude = position.coords.latitude;
   let longitude = position.coords.longitude;
 
-  let weatherAPIUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${weatherAPIKey}`;
+  let weatherAPIUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${weatherAPIKey}&units=metric`;
 
   fetch (weatherAPIUrl)
   .then(response => response.json())
   .then (data =>{
-    const watherCondition = 'sunny';
-    const userLocation = "São Paulo";
-    let temperature = 30;
-  });
+    const condition = data.weather[0].description;
+    const location = data.name;
+    const temperature2 = data.main.temp;
+    function temperatureDisplay() {
+      const weatherCondition = condition;
+      const userLocation = location;
+      let temperature = temperature2;
+      let celsiusText = `O dia está ${weatherCondition} em ${userLocation} e com temperatura de ${temperature.toFixed(
+        1
+      )} °C.`;
+      let fahr = (temperature * 9) / 5 + 32;
+    
+      let fahrText = `O dia está ${weatherCondition} em ${userLocation} e com temperatura de ${fahr.toFixed(
+        1
+      )} Fahr.`;
+    
+      document.querySelector("#greeting").innerHTML = greetingText;
+    
+      document.querySelector("#weather").innerHTML = celsiusText;
+    
+      document
+        .querySelector(".weather-group")
+        .addEventListener("click", function (e) {
+          if (e.target.id === "celsius") {
+            document.querySelector("#weather").innerHTML = celsiusText;
+          } else if (e.target.id === "fahr") {
+            document.querySelector("#weather").innerHTML = fahrText;
+          }
+        });
+    }
+temperatureDisplay();
+
+    }).catch((err => {document.querySelector("p#weather").innerHTML = "Não foi possivel obter as informações do tempo!";
+  }));;
 });
+
 
 
 //page load
 menuHandler();
 dateAtt();
 productsHandler();
-temperatureDisplay();
 thumbnailDisplay();
 footerHandler();
 //products section
